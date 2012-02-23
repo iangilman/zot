@@ -32,6 +32,12 @@
   } 
 
   // ==========
+  zot.point = function(x, y) {
+    this.x = x || 0;
+    this.y = y || 0;
+  }
+
+  // ==========
   zot.rect = function(left, top, width, height) {
     this.left = left || 0;
     this.top = top || 0;
@@ -58,10 +64,10 @@
     
     // ----------
     center: function() {
-      return {
-        x: this.left + (this.width / 2), 
-        y: this.top + (this.height / 2)
-      };
+      return new zot.point(
+        this.left + (this.width / 2), 
+        this.top + (this.height / 2)
+      );
     },
     
     // ----------
