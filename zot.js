@@ -20,13 +20,13 @@
     
     // ----------
     bounds: function($el) {
-      var pos = $el.offset();
+      var pos = $el.offset() || {left: 0, top: 0};
       return new this.rect(pos.left, pos.top, $el.width(), $el.height());
     },
 
     // ----------
     outerBounds: function($el) {
-      var pos = $el.offset();
+      var pos = $el.offset() || {left: 0, top: 0};
       return new this.rect(pos.left, pos.top, $el.outerWidth(), $el.outerHeight());
     }
   } 

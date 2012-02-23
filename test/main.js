@@ -27,7 +27,20 @@ $(document).ready(function() {
   zot.assert(box.center().x == left + (width / 2), "center x");
   zot.assert(box.center().y == top + (height / 2), "center y");
   
-  // TODO: outerBounds, centeredOn, union, css
+  box = zot.outerBounds($test);
+  zot.assert(box.left == left, "outer left");
+  zot.assert(box.top == top, "outer top");
+  zot.assert(box.width == width + (pad * 2), "outer width");
+  zot.assert(box.height == height + (pad * 2), "outer height");
+
+  var $window = $(window);
+  box = zot.bounds($window);
+  zot.assert(box.left == 0, "window left");
+  zot.assert(box.top == 0, "window top");
+  zot.assert(box.width == $window.width(), "window width");
+  zot.assert(box.height == $window.height(), "window height");
+
+  // TODO: centeredOn, union, css
   
   $("<div>")
     .text("done")
