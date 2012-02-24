@@ -91,10 +91,10 @@
     // ----------
     css: function() {
       return {
-        left: left,
-        top: top,
-        width: width,
-        height: height
+        left: this.left,
+        top: this.top,
+        width: this.width,
+        height: this.height
       };
     }
   };
