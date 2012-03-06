@@ -1,0 +1,1 @@
+Some handy utilities I like to have around, mostly geometry at the moment. 

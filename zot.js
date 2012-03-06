@@ -20,16 +20,59 @@
     
     // ----------
     bounds: function($el) {
-      var pos = $el.offset() || {left: 0, top: 0};
+      var pos = ($el[0] != window ? $el.position() : null) || {left: 0, top: 0};
       return new this.rect(pos.left, pos.top, $el.width(), $el.height());
     },
 
     // ----------
     outerBounds: function($el) {
+      var pos = ($el[0] != window ? $el.position() : null) || {left: 0, top: 0};
+      return new this.rect(pos.left, pos.top, $el.outerWidth(), $el.outerHeight());
+    },
+    
+    // ----------
+    boundsInPage: function($el) {
+      var pos = $el.offset() || {left: 0, top: 0};
+      return new this.rect(pos.left, pos.top, $el.width(), $el.height());
+    },
+
+    // ----------
+    outerBoundsInPage: function($el) {
       var pos = $el.offset() || {left: 0, top: 0};
       return new this.rect(pos.left, pos.top, $el.outerWidth(), $el.outerHeight());
     }
   } 
+
+  // ==========
+  zot.range = function(start, end) {
+    this.start = start || 0;
+    this.end = end || 0;
+  }
+  
+  zot.range.prototype = {
+    // ----------
+    extent: function(value) {
+      if (typeof value == "undefined")
+        return this.end - this.start;
+        
+      this.end = this.start + value;
+    },
+    
+    // ----------
+    proportion: function(value) {
+      return (value - this.start) / (this.end - this.start);
+    },
+    
+    // ----------
+    scale: function(value) {
+      return this.start + (value * (this.end - this.start));
+    },
+    
+    // ----------
+    mid: function() {
+      return this.scale(0.5);
+    }
+  };
 
   // ==========
   zot.point = function(x, y) {

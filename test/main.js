@@ -43,8 +43,20 @@ $(document).ready(function() {
   zot.assert(box.top == 0, "window top");
   zot.assert(box.width == $window.width(), "window width");
   zot.assert(box.height == $window.height(), "window height");
+  
+  var range = new zot.range(10, 20);
+  zot.assert(range.start == 10, "range start");
+  zot.assert(range.end == 20, "range end");
+  zot.assert(range.extent() == 10, "range extent");
+  zot.assert(range.mid() == 15, "range mid");
+  zot.assert(range.scale(0.9) == 19, "range scale 0.9");
+  zot.assert(range.scale(1.1) == 21, "range scale 1.1");
+  zot.assert(range.scale(-0.1) == 9, "range scale -0.1");
+  zot.assert(range.proportion(19) == 0.9, "range proportion 19");
+  zot.assert(range.proportion(21) == 1.1, "range proportion 21");
+  zot.assert(range.proportion(9) == -0.1, "range proportion 9");
 
-  // TODO: centeredOn, union, point constructor, rect constructor
+  // TODO: centeredOn, union, point constructor, rect constructor, *InPage
   
   $("<div>")
     .text("done")
