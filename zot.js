@@ -60,11 +60,33 @@
     
     // ----------
     proportion: function(value) {
+      if (value <= this.start)
+        return 0;
+        
+      if (value >= this.end)
+        return 1;
+        
       return (value - this.start) / (this.end - this.start);
     },
     
     // ----------
     scale: function(value) {
+      if (value <= 0)
+        return this.start;
+        
+      if (value >= 1)
+        return this.end;
+        
+      return this.start + (value * (this.end - this.start));
+    },
+    
+    // ----------
+    proportionUnclipped: function(value) {
+      return (value - this.start) / (this.end - this.start);
+    },
+    
+    // ----------
+    scaleUnclipped: function(value) {
       return this.start + (value * (this.end - this.start));
     },
     

@@ -50,11 +50,17 @@ $(document).ready(function() {
   zot.assert(range.extent() == 10, "range extent");
   zot.assert(range.mid() == 15, "range mid");
   zot.assert(range.scale(0.9) == 19, "range scale 0.9");
-  zot.assert(range.scale(1.1) == 21, "range scale 1.1");
-  zot.assert(range.scale(-0.1) == 9, "range scale -0.1");
+  zot.assert(range.scale(1.1) == 20, "range scale 1.1");
+  zot.assert(range.scale(-0.1) == 10, "range scale -0.1");
   zot.assert(range.proportion(19) == 0.9, "range proportion 19");
-  zot.assert(range.proportion(21) == 1.1, "range proportion 21");
-  zot.assert(range.proportion(9) == -0.1, "range proportion 9");
+  zot.assert(range.proportion(21) == 1, "range proportion 21");
+  zot.assert(range.proportion(9) == 0, "range proportion 9");
+  zot.assert(range.scaleUnclipped(0.9) == 19, "range scaleUnclipped 0.9");
+  zot.assert(range.scaleUnclipped(1.1) == 21, "range scaleUnclipped 1.1");
+  zot.assert(range.scaleUnclipped(-0.1) == 9, "range scaleUnclipped -0.1");
+  zot.assert(range.proportionUnclipped(19) == 0.9, "range proportionUnclipped 19");
+  zot.assert(range.proportionUnclipped(21) == 1.1, "range proportionUnclipped 21");
+  zot.assert(range.proportionUnclipped(9) == -0.1, "range proportionUnclipped 9");
 
   // TODO: centeredOn, union, point constructor, rect constructor, *InPage
   
