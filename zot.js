@@ -101,6 +101,28 @@
     this.x = x || 0;
     this.y = y || 0;
   }
+  
+  zot.point.prototype = {
+    // ----------
+    plus: function(point) {
+      return new zot.point(this.x + point.x, this.y + point.y);
+    }, 
+
+    // ----------
+    minus: function(point) {
+      return new zot.point(this.x - point.x, this.y - point.y);
+    }, 
+
+    // ----------
+    times: function(point) {
+      return new zot.point(this.x * point.x, this.y * point.y);
+    }, 
+
+    // ----------
+    dividedBy: function(point) {
+      return new zot.point(this.x / point.x, this.y / point.y);
+    }
+  };
 
   // ==========
   zot.rect = function(left, top, width, height) {
@@ -125,6 +147,26 @@
         return this.top + this.height;
         
       this.height = value - this.top;
+    },
+    
+    // ----------
+    topLeft: function() {
+      return new zot.point(this.left, this.top);
+    },
+    
+    // ----------
+    topRight: function() {
+      return new zot.point(this.right(), this.top);
+    },
+    
+    // ----------
+    bottomLeft: function() {
+      return new zot.point(this.left, this.bottom());
+    },
+    
+    // ----------
+    bottomRight: function() {
+      return new zot.point(this.right(), this.bottom());
     },
     
     // ----------
