@@ -39,6 +39,12 @@ $(document).ready(function() {
   zot.assert(box.bottomRight().x == left + width, "bottomRight x");
   zot.assert(box.bottomRight().y == top + height, "bottomRight y");
   
+  var inset = box.insetBy(5, 7);
+  zot.assert(inset.left == left + 5, "inset left");
+  zot.assert(inset.top == top + 7, "inset top");
+  zot.assert(inset.width == width - 10, "inset width");
+  zot.assert(inset.height == height - 14, "inset height");
+  
   box = zot.outerBounds($test);
   zot.assert(box.left == left, "outer left");
   zot.assert(box.top == top, "outer top");

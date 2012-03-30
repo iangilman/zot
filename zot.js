@@ -188,6 +188,15 @@
     },
     
     // ----------
+    insetBy: function(x, y) {
+      return new zot.rect(this.left + x, 
+        this.top + y,
+        this.width - (x * 2),
+        this.height - (y * 2)
+      );
+    },
+    
+    // ----------
     union: function(rect) {
       var left = Math.min(this.left, rect.left);
       var top = Math.min(this.top, rect.top);
