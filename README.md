@@ -8,7 +8,7 @@ Just grab zot.js and use it on your page.
 
 Geometry classes include zot.point, zot.rect and zot.range. There are some helper methods for getting the boundary rectangle off of jQuery objects (though zot does not depend on jQuery). 
 
-There's also a super simple assert: `zot.assert(a == 2, "a should be equel to 2");` 
+There's also a super simple assert: `zot.assert(a == 2, "a should be equal to 2");` 
 
 More documentation to come; for now you'll have to read the code. 
 
