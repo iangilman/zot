@@ -53,7 +53,7 @@
   zot.range.prototype = {
     // ----------
     extent: function(value) {
-      if (typeof value == "undefined")
+      if (value === undefined)
         return this.end - this.start;
         
       this.end = this.start + value;
@@ -136,7 +136,7 @@
   zot.rect.prototype = {
     // ----------
     right: function(value) {
-      if (typeof value == "undefined")
+      if (value === undefined)
         return this.left + this.width;
         
       this.width = value - this.left;
@@ -144,7 +144,7 @@
     
     // ----------
     bottom: function(value) {
-      if (typeof value == "undefined")
+      if (value === undefined)
         return this.top + this.height;
         
       this.height = value - this.top;
