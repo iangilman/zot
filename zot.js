@@ -1,5 +1,6 @@
-/// zot 0.03
+/// zot 0.04
 /// Copyright 2012, Ian Gilman
+/// http://iangilman.com
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 
 (function(){
@@ -17,6 +18,17 @@
         
       if ("console" in window)
         console.error("ASSERT FAILED: " + message);
+    }, 
+    
+    // ----------
+    assertProperties: function(obj, properties) {
+      if (typeof properties == "string")
+        properties = properties.split(" ");
+        
+      for (var a = 0; a < properties.length; a++) {
+        var property = properties[a];
+        this.assert(property in obj, "must have " + property + " property");
+      }
     }, 
     
     // ----------

@@ -1,5 +1,6 @@
 $(document).ready(function() {
   zot.assert(false, "test assert");
+  zot.assertProperties({there: true}, "there justTesting");
   
   var left = 20;
   var top = 30;
