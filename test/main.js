@@ -2,6 +2,7 @@ $(document).ready(function() {
   zot.assert(false, "test assert");
   zot.assertProperties({there: true}, "there justTesting");
   
+  var epsilon = 0.000001;
   var left = 20;
   var top = 30;
   var width = 40;
@@ -89,6 +90,28 @@ $(document).ready(function() {
   zot.assert(p1.times(p2).y == 1000, "point times y");
   zot.assert(p1.dividedBy(p2).x == 3, "point divided by x");
   zot.assert(p1.dividedBy(p2).y == 2.5, "point divided by y");
+  
+  var polars = [
+    new zot.polar(50, 0), 
+    new zot.polar(50, -Math.PI / 2), 
+    new zot.polar(50, Math.PI / 2), 
+    new zot.polar(50, Math.PI), 
+  ];
+  
+  var points = [
+    new zot.point(50, 0),
+    new zot.point(0, -50),
+    new zot.point(0, 50),
+    new zot.point(-50, 0)
+  ];
+  
+  $.each(polars, function(a, polar) {
+    var p3 = polar.point();
+    zot.assert(Math.abs(p3.x - points[a].x) < epsilon, "polar point x " + a);
+    zot.assert(Math.abs(p3.y - points[a].y) < epsilon, "polar point y " + a);
+    zot.assert(p3.polar().distance == polar.distance, "polar distance " + a);
+    zot.assert(p3.polar().radians == polar.radians, "polar radians " + a);
+  });
 
   // TODO: centeredOn, union, rect constructor, *InPage
   
