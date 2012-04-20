@@ -92,10 +92,10 @@ $(document).ready(function() {
   zot.assert(p1.dividedBy(p2).y == 2.5, "point divided by y");
   
   var polars = [
-    new zot.polar(50, 0), 
-    new zot.polar(50, -Math.PI / 2), 
-    new zot.polar(50, Math.PI / 2), 
-    new zot.polar(50, Math.PI), 
+    new zot.polar(0, 50), 
+    new zot.polar(-Math.PI / 2, 50), 
+    new zot.polar(Math.PI / 2, 50), 
+    new zot.polar(Math.PI, 50), 
   ];
   
   var points = [

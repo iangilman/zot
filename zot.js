@@ -1,4 +1,4 @@
-/// zot 0.05
+/// zot 0.06
 /// Copyright 2012, Ian Gilman
 /// http://iangilman.com
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
@@ -139,16 +139,16 @@
     // ----------
     polar: function() {
       return new zot.polar(
-        Math.sqrt((this.x * this.x) + (this.y * this.y)),
-        Math.atan2(this.y, this.x)
+        Math.atan2(this.y, this.x),
+        Math.sqrt((this.x * this.x) + (this.y * this.y))
       );
     }
   };
 
   // ==========
-  zot.polar = function(distance, radians) {
-    this.distance = distance || 0;
+  zot.polar = function(radians, distance) {
     this.radians = radians || 0;
+    this.distance = distance || 0;
   }
   
   zot.polar.prototype = {
