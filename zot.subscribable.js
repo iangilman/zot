@@ -77,6 +77,7 @@
     
     // ----------
     _publish: function(type, data) {
+      data = data || {};
       data.type = type;
       data.from = this;
       this._publishByType(type, data);
