@@ -1,13 +1,14 @@
-/// zot 0.06
-/// Copyright 2012, Ian Gilman
-/// http://iangilman.com
+/// zot 0.1.0
+/// Copyright 2012-13, Ian Gilman
+/// https://github.com/iangilman/zot
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 
 (function(){
+  /*globals zot */
 
   // ==========
   if ("zot" in window)
-    throw Error("There's already a zot defined!");
+    throw new Error("There's already a zot defined!");
     
   // ==========
   window.zot = {
@@ -15,7 +16,8 @@
     assert: function(condition, message) {
       if (condition)
         return;
-        
+
+      /*globals console */
       if ("console" in window)
         console.error("ASSERT FAILED: " + message);
     }, 
@@ -54,13 +56,13 @@
       var pos = $el.offset() || {left: 0, top: 0};
       return new this.rect(pos.left, pos.top, $el.outerWidth(), $el.outerHeight());
     }
-  } 
+  };
 
   // ==========
   zot.range = function(start, end) {
     this.start = start || 0;
     this.end = end || 0;
-  }
+  };
   
   zot.range.prototype = {
     // ----------
@@ -113,7 +115,7 @@
   zot.point = function(x, y) {
     this.x = x || 0;
     this.y = y || 0;
-  }
+  };
   
   zot.point.prototype = {
     // ----------
@@ -149,7 +151,7 @@
   zot.polar = function(radians, distance) {
     this.radians = radians || 0;
     this.distance = distance || 0;
-  }
+  };
   
   zot.polar.prototype = {
     // ----------
@@ -167,7 +169,7 @@
     this.top = top || 0;
     this.width = width || 0;
     this.height = height || 0;
-  }
+  };
   
   zot.rect.prototype = {
     // ----------

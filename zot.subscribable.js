@@ -1,13 +1,14 @@
-/// zot.subscribable 0.01
-/// Copyright 2012, Ian Gilman
-/// http://iangilman.com
+/// zot.subscribable 0.1.0
+/// Copyright 2012-13, Ian Gilman
+/// https://github.com/iangilman/zot
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 
 (function(){
+  /*globals zot */
 
   // ==========
   if (!("zot" in window))
-    throw Error("Requires zot!");
+    throw new Error("Requires zot!");
     
   // ==========
   zot.subscribable = {
