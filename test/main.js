@@ -1,4 +1,8 @@
+/*globals zot */
+
 $(document).ready(function() {
+  /*globals console */
+  console.log('We expect two asserts to fail: "test assert" and "must have justTesting property"');
   zot.assert(false, "test assert");
   zot.assertProperties({there: true}, "there justTesting");
   
@@ -55,11 +59,39 @@ $(document).ready(function() {
 
   var $window = $(window);
   box = zot.bounds($window);
-  zot.assert(box.left == 0, "window left");
-  zot.assert(box.top == 0, "window top");
+  zot.assert(box.left === 0, "window left");
+  zot.assert(box.top === 0, "window top");
   zot.assert(box.width == $window.width(), "window width");
   zot.assert(box.height == $window.height(), "window height");
-  
+
+  box = new zot.rect(10, 20, 100, 200);
+  zot.assert(box.left == 10, "left for constructor");
+  zot.assert(box.top == 20, "top for constructor");
+  zot.assert(box.width == 100, "width for constructor");
+  zot.assert(box.height == 200, "height for constructor");
+
+  var box2 = new zot.rect(30, 40, 100, 100);
+  zot.assert(box.intersects(box2), "intersects");
+  var box3 = box.intersection(box2);
+  zot.assert(box3.left == 30, "left for intersection");
+  zot.assert(box3.top == 40, "top for intersection");
+  zot.assert(box3.width == 80, "width for intersection");
+  zot.assert(box3.height == 100, "height for intersection");
+
+  box3 = box.union(box2);
+  zot.assert(box3.left == 10, "left for union");
+  zot.assert(box3.top == 20, "top for union");
+  zot.assert(box3.width == 120, "width for union");
+  zot.assert(box3.height == 200, "height for union");
+
+  box2.left = 500;
+  zot.assert(box.intersects(box2) === false, "non-intersection");
+  box3 = box.intersection(box2);
+  zot.assert(box3.left === 0, "left for non-intersection");
+  zot.assert(box3.top === 0, "top for non-intersection");
+  zot.assert(box3.width === 0, "width for non-intersection");
+  zot.assert(box3.height === 0, "height for non-intersection");
+
   var range = new zot.range(10, 20);
   zot.assert(range.start == 10, "range start");
   zot.assert(range.end == 20, "range end");
@@ -70,7 +102,7 @@ $(document).ready(function() {
   zot.assert(range.scale(-0.1) == 10, "range scale -0.1");
   zot.assert(range.proportion(19) == 0.9, "range proportion 19");
   zot.assert(range.proportion(21) == 1, "range proportion 21");
-  zot.assert(range.proportion(9) == 0, "range proportion 9");
+  zot.assert(range.proportion(9) === 0, "range proportion 9");
   zot.assert(range.scaleUnclipped(0.9) == 19, "range scaleUnclipped 0.9");
   zot.assert(range.scaleUnclipped(1.1) == 21, "range scaleUnclipped 1.1");
   zot.assert(range.scaleUnclipped(-0.1) == 9, "range scaleUnclipped -0.1");
@@ -95,7 +127,7 @@ $(document).ready(function() {
     new zot.polar(0, 50), 
     new zot.polar(-Math.PI / 2, 50), 
     new zot.polar(Math.PI / 2, 50), 
-    new zot.polar(Math.PI, 50), 
+    new zot.polar(Math.PI, 50)
   ];
   
   var points = [
@@ -113,7 +145,7 @@ $(document).ready(function() {
     zot.assert(p3.polar().radians == polar.radians, "polar radians " + a);
   });
 
-  // TODO: centeredOn, union, rect constructor, *InPage
+  // TODO: centeredOn, subscribable, *InPage
   
   $("<div>")
     .text("done")
