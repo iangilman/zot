@@ -240,7 +240,28 @@
       var bottom = Math.max(this.bottom(), rect.bottom());
       return new zot.rect(left, top, right - left, bottom - top);
     }, 
-    
+
+    // ----------
+    intersection: function(rect) {
+      var left = Math.max(this.left, rect.left);
+      var top = Math.max(this.top, rect.top);
+      var right = Math.min(this.right(), rect.right());
+      var bottom = Math.min(this.bottom(), rect.bottom());
+      if (right > left && bottom > top) {
+        return new zot.rect(left, top, right - left, bottom - top);
+      }
+
+      return new zot.rect(0, 0, 0, 0);
+    }, 
+
+    // ----------
+    intersects: function(rect) {
+      return (this.right() > rect.left
+        && this.left < rect.right()
+        && this.bottom() > rect.top
+        && this.top < rect.bottom());
+    },
+
     // ----------
     css: function() {
       return {
