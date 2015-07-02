@@ -1,5 +1,5 @@
-/// zot 0.1.0
-/// Copyright 2012-13, Ian Gilman
+/// zot 0.1.1
+/// Copyright 2012-15, Ian Gilman
 /// https://github.com/iangilman/zot
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 
@@ -7,31 +7,33 @@
   /*globals zot */
 
   // ==========
-  if ("zot" in window)
-    throw new Error("There's already a zot defined!");
+  if ('zot' in window)
+    throw new Error('There\'s already a zot defined!');
     
   // ==========
   window.zot = {
     // ----------
     assert: function(condition, message) {
-      if (condition)
-        return;
-
-      /*globals console */
-      if ("console" in window)
-        console.error("ASSERT FAILED: " + message);
-    }, 
+      if (window.console && console.assert) {
+        console.assert(condition, message);
+      }
+    },
     
     // ----------
     assertProperties: function(obj, properties) {
-      if (typeof properties == "string")
-        properties = properties.split(" ");
+      if (typeof properties == 'string')
+        properties = properties.split(' ');
         
       for (var a = 0; a < properties.length; a++) {
         var property = properties[a];
-        this.assert(property in obj, "must have " + property + " property");
+        this.assert(property in obj, 'must have ' + property + ' property');
       }
     }, 
+
+    // ----------
+    isInteger: function(value) {
+      return typeof value === 'number' && !isNaN(value) && Math.floor(value) === value;
+    },
     
     // ----------
     bounds: function($el) {
@@ -272,6 +274,26 @@
         width: this.width,
         height: this.height
       };
+    }
+  };
+
+  // ==========
+  zot.grid = function() {
+    this._cells = {};
+  };
+
+  zot.grid.prototype = {
+    // ----------
+    cell: function(x, y, value) {
+      zot.assert(zot.isInteger(x), '[zot.grid.cell] x must be an integer');
+      zot.assert(zot.isInteger(y), '[zot.grid.cell] y must be an integer');
+
+      var key = x + 'x' + y;
+      if (value === undefined) {
+        return this._cells[key];
+      }
+
+      this._cells[key] = value;
     }
   };
   
