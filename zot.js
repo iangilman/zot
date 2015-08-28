@@ -1,4 +1,4 @@
-/// zot 0.1.1
+/// zot 0.1.4
 /// Copyright 2012-15, Ian Gilman
 /// https://github.com/iangilman/zot
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
@@ -57,6 +57,32 @@
     outerBoundsInPage: function($el) {
       var pos = $el.offset() || {left: 0, top: 0};
       return new this.rect(pos.left, pos.top, $el.outerWidth(), $el.outerHeight());
+    },
+
+    // ----------
+    exists: function(obj, propertyPath) {
+      var properties = propertyPath.split('.');
+      for (var i = 0; i < properties.length; i++) {
+        obj = obj[properties[i]]; 
+        if (obj === undefined) {
+          return false; 
+        }
+      }
+
+      return true;
+    },
+
+    // ----------
+    fire: function(func) {
+      if (func) {
+        func();
+      }
+    },
+
+    // ----------
+    lerp: function(a, b, factor) {
+      this.assert(factor >= 0 && factor <= 1, 'factor must be >= 0 and <= 1');
+      return (a * (1 - factor)) + (b * factor);
     }
   };
 
