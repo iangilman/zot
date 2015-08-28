@@ -17,7 +17,7 @@ module.exports = {
     var next = function(err) {
       if (err && !savedErr) {
         savedErr = err;
-      } 
+      }
 
       index++;
 
