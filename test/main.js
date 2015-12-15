@@ -145,6 +145,21 @@ $(document).ready(function() {
     zot.assert(p3.polar().radians == polar.radians, "polar radians " + a);
   });
 
+  // Event
+  var obj = {
+    emit: function() {
+      console.log('emit', arguments);
+    }
+  };
+
+  zot.event.props(obj, {
+    foo: 12
+  });
+
+  zot.assert(obj.foo === 12, 'foo === 12');
+  obj.foo++;
+  zot.assert(obj.foo === 13, 'foo === 13');
+
   // TODO: centeredOn, subscribable, *InPage
   
   $("<div>")

@@ -1,4 +1,4 @@
-/// zot 0.1.5
+/// zot 0.1.6
 /// Copyright 2012-15, Ian Gilman
 /// https://github.com/iangilman/zot
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
@@ -89,6 +89,10 @@
 
     // ----------
     exists: function(obj, propertyPath) {
+      if (!obj) {
+        return false; 
+      }
+      
       var properties = propertyPath.split('.');
       for (var i = 0; i < properties.length; i++) {
         obj = obj[properties[i]]; 

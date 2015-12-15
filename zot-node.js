@@ -1,4 +1,4 @@
-// zot-node 0.0.1
+// zot-node 0.0.2
 // Copyright 2015, Ian Gilman
 // https://github.com/iangilman/zot
 // Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
@@ -43,11 +43,16 @@ module.exports = {
 
   // ----------
   checker: function(success, failure) {
-    return function(err, result) {
+    return function(err) {
       if (err) {
         failure(err);
       } else {
-        success(result);
+        var args = [];
+        for (var i = 1; i < arguments.length; i++) {
+          args.push(arguments[i]);
+        }
+
+        success.apply(null, args);
       }
     };
   }
