@@ -1,5 +1,5 @@
-// zot-node 0.0.2
-// Copyright 2015, Ian Gilman
+// zot-node 0.0.3
+// Copyright 2015-16, Ian Gilman
 // https://github.com/iangilman/zot
 // Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 
@@ -9,7 +9,7 @@ module.exports = {
     var index = -1;
     var savedErr = null;
 
-    if (typeof list.length !== 'number' || isNaN(list.length)) {
+    if (!list || typeof list.length !== 'number' || isNaN(list.length)) {
       completion(savedErr);
       return;
     }

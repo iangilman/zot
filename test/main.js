@@ -145,6 +145,12 @@ $(document).ready(function() {
     zot.assert(p3.polar().radians == polar.radians, "polar radians " + a);
   });
 
+  // Scale
+  var scale = new zot.scale().from(50, 100).to(100, 200);
+  zot.assert(scale.scale(50) === 100, 'scale start');
+  zot.assert(scale.scale(75) === 150, 'scale mid');
+  zot.assert(scale.scale(100) === 200, 'scale end');
+
   // Event
   var obj = {
     emit: function() {

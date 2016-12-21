@@ -1,4 +1,4 @@
-/// zot 0.1.7
+/// zot 0.1.8
 /// Copyright 2012-15, Ian Gilman
 /// https://github.com/iangilman/zot
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
@@ -105,6 +105,19 @@
     },
 
     // ----------
+    // zot.elements(this, $('.main-content .viewer-3d-mode'), [
+    //   '.file-input',
+    //   '.open-dialog',
+    // ]);
+    // elements: function(obj, $base, selectors) {
+    //   obj.$el = $base;
+    //   var i;
+    //   for (i = 0; i < selectors.length; i++) {
+
+    //   }
+    // },
+
+    // ----------
     fire: function(func) {
       if (func) {
         func();
@@ -168,6 +181,40 @@
     // ----------
     mid: function() {
       return this.scale(0.5);
+    }
+  };
+
+  // ==========
+  zot.scale = function() {
+    this._fromStart = 0;
+    this._fromEnd = 1;
+    this._fromExtent = 1;
+    this._toStart = 0;
+    this._toEnd = 1;
+    this._toExtent = 1;
+  };
+
+  zot.scale.prototype = {
+    // ----------
+    from: function(start, end) {
+      this._fromStart = start;
+      this._fromEnd = end;
+      this._fromExtent = end - start;
+      return this;
+    },
+
+    // ----------
+    to: function(start, end) {
+      this._toStart = start;
+      this._toEnd = end;
+      this._toExtent = end - start;
+      return this;
+    },
+
+    // ----------
+    scale: function(value) {
+      var factor = (value - this._fromStart) / this._fromExtent;
+      return this._toStart + (this._toExtent * factor);
     }
   };
 
