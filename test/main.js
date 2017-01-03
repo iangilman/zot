@@ -147,9 +147,32 @@ $(document).ready(function() {
 
   // Scale
   var scale = new zot.scale().from(50, 100).to(100, 200);
-  zot.assert(scale.scale(50) === 100, 'scale start');
-  zot.assert(scale.scale(75) === 150, 'scale mid');
-  zot.assert(scale.scale(100) === 200, 'scale end');
+  zot.assert(scale.scale(25) === 50, 'scale1 before');
+  zot.assert(scale.scale(50) === 100, 'scale1 start');
+  zot.assert(scale.scale(75) === 150, 'scale1 mid');
+  zot.assert(scale.scale(100) === 200, 'scale1 end');
+  zot.assert(scale.scale(125) === 250, 'scale1 beyond');
+
+  scale = new zot.scale().from(50, 100).to(100, 200).clamp(true);
+  zot.assert(scale.scale(25) === 100, 'scale1 clamped before');
+  zot.assert(scale.scale(50) === 100, 'scale1 clamped start');
+  zot.assert(scale.scale(75) === 150, 'scale1 clamped mid');
+  zot.assert(scale.scale(100) === 200, 'scale1 clamped end');
+  zot.assert(scale.scale(125) === 200, 'scale1 clamped beyond');
+
+  scale = new zot.scale().from(50, 100).to(200, 100);
+  zot.assert(scale.scale(25) === 250, 'scale2 before');
+  zot.assert(scale.scale(50) === 200, 'scale2 start');
+  zot.assert(scale.scale(75) === 150, 'scale2 mid');
+  zot.assert(scale.scale(100) === 100, 'scale2 end');
+  zot.assert(scale.scale(125) === 50, 'scale2 beyond');
+
+  scale = new zot.scale().from(50, 100).to(200, 100).clamp(true);
+  zot.assert(scale.scale(25) === 200, 'scale2 clamped before');
+  zot.assert(scale.scale(50) === 200, 'scale2 clamped start');
+  zot.assert(scale.scale(75) === 150, 'scale2 clamped mid');
+  zot.assert(scale.scale(100) === 100, 'scale2 clamped end');
+  zot.assert(scale.scale(125) === 100, 'scale2 clamped beyond');
 
   // Event
   var obj = {

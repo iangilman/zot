@@ -1,4 +1,4 @@
-/// zot 0.1.8
+/// zot 0.1.9
 /// Copyright 2012-15, Ian Gilman
 /// https://github.com/iangilman/zot
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
@@ -192,6 +192,7 @@
     this._toStart = 0;
     this._toEnd = 1;
     this._toExtent = 1;
+    this._clamp = false;
   };
 
   zot.scale.prototype = {
@@ -212,9 +213,24 @@
     },
 
     // ----------
+    clamp: function(flag) {
+      this._clamp = flag;
+      return this;
+    },
+
+    // ----------
     scale: function(value) {
       var factor = (value - this._fromStart) / this._fromExtent;
-      return this._toStart + (this._toExtent * factor);
+      var result = this._toStart + (this._toExtent * factor);
+      if (this._clamp) {
+        if (this._toStart < this._toEnd) {
+          result = Math.max(this._toStart, Math.min(this._toEnd, result));
+        } else {
+          result = Math.max(this._toEnd, Math.min(this._toStart, result));
+        }
+      }
+
+      return result;
     }
   };
 
