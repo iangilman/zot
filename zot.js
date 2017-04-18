@@ -1,14 +1,15 @@
-/// zot 0.1.9
-/// Copyright 2012-15, Ian Gilman
+/// zot 0.1.10
+/// Copyright 2012-17, Ian Gilman
 /// https://github.com/iangilman/zot
 /// Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 
-(function(){
+(function() {
   /*globals zot */
 
   // ==========
-  if ('zot' in window)
+  if ('zot' in window) {
     throw new Error('There\'s already a zot defined!');
+  }
 
   // ==========
   window.zot = {
@@ -21,8 +22,9 @@
 
     // ----------
     assertProperties: function(obj, properties) {
-      if (typeof properties == 'string')
+      if (typeof properties === 'string') {
         properties = properties.split(' ');
+      }
 
       for (var a = 0; a < properties.length; a++) {
         var property = properties[a];
@@ -37,25 +39,25 @@
 
     // ----------
     bounds: function($el) {
-      var pos = ($el[0] != window ? $el.position() : null) || {left: 0, top: 0};
+      var pos = ($el[0] !== window ? $el.position() : null) || { left: 0, top: 0 };
       return new this.rect(pos.left, pos.top, $el.width(), $el.height());
     },
 
     // ----------
     outerBounds: function($el) {
-      var pos = ($el[0] != window ? $el.position() : null) || {left: 0, top: 0};
+      var pos = ($el[0] !== window ? $el.position() : null) || { left: 0, top: 0 };
       return new this.rect(pos.left, pos.top, $el.outerWidth(), $el.outerHeight());
     },
 
     // ----------
     boundsInPage: function($el) {
-      var pos = $el.offset() || {left: 0, top: 0};
+      var pos = $el.offset() || { left: 0, top: 0 };
       return new this.rect(pos.left, pos.top, $el.width(), $el.height());
     },
 
     // ----------
     outerBoundsInPage: function($el) {
-      var pos = $el.offset() || {left: 0, top: 0};
+      var pos = $el.offset() || { left: 0, top: 0 };
       return new this.rect(pos.left, pos.top, $el.outerWidth(), $el.outerHeight());
     },
 
@@ -90,9 +92,9 @@
     // ----------
     exists: function(obj, propertyPath) {
       if (!obj) {
-        return false; 
+        return false;
       }
-      
+
       var properties = propertyPath.split('.');
       for (var i = 0; i < properties.length; i++) {
         obj = obj[properties[i]];
@@ -140,30 +142,36 @@
   zot.range.prototype = {
     // ----------
     extent: function(value) {
-      if (value === undefined)
+      if (value === undefined) {
         return this.end - this.start;
+      }
 
       this.end = this.start + value;
+      return undefined; // Since we're just setting in this case
     },
 
     // ----------
     proportion: function(value) {
-      if (value <= this.start)
+      if (value <= this.start) {
         return 0;
+      }
 
-      if (value >= this.end)
+      if (value >= this.end) {
         return 1;
+      }
 
       return (value - this.start) / (this.end - this.start);
     },
 
     // ----------
     scale: function(value) {
-      if (value <= 0)
+      if (value <= 0) {
         return this.start;
+      }
 
-      if (value >= 1)
+      if (value >= 1) {
         return this.end;
+      }
 
       return this.start + (value * (this.end - this.start));
     },
@@ -186,29 +194,35 @@
 
   // ==========
   zot.scale = function() {
-    this._fromStart = 0;
-    this._fromEnd = 1;
-    this._fromExtent = 1;
-    this._toStart = 0;
-    this._toEnd = 1;
-    this._toExtent = 1;
+    this._from = {
+      start: 0,
+      end: 1,
+      extent: 1
+    };
+
+    this._to = {
+      start: 0,
+      end: 1,
+      extent: 1
+    };
+
     this._clamp = false;
   };
 
   zot.scale.prototype = {
     // ----------
     from: function(start, end) {
-      this._fromStart = start;
-      this._fromEnd = end;
-      this._fromExtent = end - start;
+      this._from.start = start;
+      this._from.end = end;
+      this._from.extent = end - start;
       return this;
     },
 
     // ----------
     to: function(start, end) {
-      this._toStart = start;
-      this._toEnd = end;
-      this._toExtent = end - start;
+      this._to.start = start;
+      this._to.end = end;
+      this._to.extent = end - start;
       return this;
     },
 
@@ -220,13 +234,23 @@
 
     // ----------
     scale: function(value) {
-      var factor = (value - this._fromStart) / this._fromExtent;
-      var result = this._toStart + (this._toExtent * factor);
+      return this._scale(this._from, this._to, value);
+    },
+
+    // ----------
+    invert: function(value) {
+      return this._scale(this._to, this._from, value);
+    },
+
+    // ----------
+    _scale: function(from, to, value) {
+      var factor = (value - from.start) / from.extent;
+      var result = to.start + (to.extent * factor);
       if (this._clamp) {
-        if (this._toStart < this._toEnd) {
-          result = Math.max(this._toStart, Math.min(this._toEnd, result));
+        if (to.start < to.end) {
+          result = Math.max(to.start, Math.min(to.end, result));
         } else {
-          result = Math.max(this._toEnd, Math.min(this._toStart, result));
+          result = Math.max(to.end, Math.min(to.start, result));
         }
       }
 
@@ -297,18 +321,22 @@
   zot.rect.prototype = {
     // ----------
     right: function(value) {
-      if (value === undefined)
+      if (value === undefined) {
         return this.left + this.width;
+      }
 
       this.width = value - this.left;
+      return undefined; // Since we're just setting in this case
     },
 
     // ----------
     bottom: function(value) {
-      if (value === undefined)
+      if (value === undefined) {
         return this.top + this.height;
+      }
 
       this.height = value - this.top;
+      return undefined; // Since we're just setting in this case
     },
 
     // ----------
@@ -381,18 +409,18 @@
 
     // ----------
     intersects: function(rect) {
-      return (this.right() > rect.left
-        && this.left < rect.right()
-        && this.bottom() > rect.top
-        && this.top < rect.bottom());
+      return (this.right() > rect.left &&
+        this.left < rect.right() &&
+        this.bottom() > rect.top &&
+        this.top < rect.bottom());
     },
 
     // ----------
     contains: function(point) {
-      return (this.right() > point.x
-        && this.left <= point.x
-        && this.bottom() > point.y
-        && this.top <= point.y);
+      return (this.right() > point.x &&
+        this.left <= point.x &&
+        this.bottom() > point.y &&
+        this.top <= point.y);
     },
 
     // ----------
@@ -423,6 +451,7 @@
       }
 
       this._cells[key] = value;
+      return undefined; // Since we're just setting in this case
     }
   };
 
